@@ -1,7 +1,8 @@
 <template>
-  <ul>
-    <li v-for="n in 10 ">app-item</li>
-  </ul>
+  <div>
+    <div>我的中国心</div>
+    <ul v-for="n in 3"><li>{{msg}}</li></ul>
+  </div>
 </template>
 
 <script>
@@ -17,7 +18,7 @@
 <style>
   html{
     background: #34aa82;
-    color:#fff;
+    color: #d8fcff;
   }
   .hi{
     width:200px;

@@ -24,6 +24,15 @@ let devMiddleware = require('webpack-dev-middleware')(compiler, {
 // 使用 webpack-hot-middleware 中间件
 let hotMiddleware = require('webpack-hot-middleware')(compiler);
 
+// webpack插件，监听html文件改变事件
+compiler.plugin('compilation', function (compilation) {
+  compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+    // 发布事件
+    hotMiddleware.publish({action: 'reload'});
+    cb();
+  })
+});
+
 // 注册中间件
 app.use(devMiddleware);
 
