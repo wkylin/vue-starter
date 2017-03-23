@@ -3,35 +3,39 @@
  */
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let BabiliPlugin = require("babili-webpack-plugin");
 let path = require('path');
 let webpack = require('webpack');
 // 引入基本配置
 let config = require('./webpack.config');
 
-/*config.vue = {
-  loaders: {
-    css: ExtractTextPlugin.extract("css")
-  }
-};*/
 config.plugins = [
-  new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: '"production"'
-    }
-  }),
   // 压缩代码
-/*  new webpack.optimize.UglifyJsPlugin({
+  /*new webpack.optimize.UglifyJsPlugin({
     compress: {
-      warnings: false
-    }
+      warnings: true
+    },
+    sourceMap:true,
+    minimize:true
   }),*/
-  new webpack.optimize.OccurrenceOrderPlugin(),
+  new webpack.HotModuleReplacementPlugin(),
+  new BabiliPlugin({}, {babel: require("babel-core")}),
   // 提取css为单文件
-  new ExtractTextPlugin("../[name].[contenthash].css"),
+  new ExtractTextPlugin({
+    filename:"../[name].[contenthash].css",
+    disable:false,
+    allChunks:true
+  }),
   new HtmlWebpackPlugin({
     filename: '../index.html',
     template: path.resolve(__dirname, '../app/index.html'),
-    inject: true
+    inject: true,
+    minify: {
+      removeComments: true,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true
+    },
+    chunksSortMode: 'dependency'
   }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendors',

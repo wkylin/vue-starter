@@ -10,7 +10,6 @@ let config = require('./webpack.config');
 config.output.publicPath = '/';
 
 config.plugins = [
-  new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new HtmlWebpackPlugin({

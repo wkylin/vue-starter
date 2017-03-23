@@ -25,24 +25,34 @@ module.exports = {
     extensions: ['.js', '.vue']
   },
   module: {
-    loaders: [
+    rules: [
       // 使用vue-loader 加载 .vue 结尾的文件
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        use:[
+          {
+            loader: 'vue-loader'
+          }
+        ]
       },
       {
-        test: /\.js$/,
-        loader: 'babel-loader?presets=es2015',
-        exclude: /node_modules/
+        test: /\.(js)$/,
+        use: {
+          loader:'babel-loader'
+        },
+        exclude: /(node_modules)/
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: '[name].[ext]?[hash:7]'
-        }
+        use:[
+          {
+            loader: 'url-loader',
+            query: {
+              limit: 10000,
+              name: '[name].[ext]?[hash:7]'
+            }
+          }
+        ]
       }
     ],
   },
